@@ -21,8 +21,8 @@ mod raw {
 pub type CudaResourceHandle = *mut cudaGraphicsResource;
 pub struct CudaD3D11Resource {
     handle: *mut cudaGraphicsResource,
-    resource: ID3D11Buffer,
-    device_context: ID3D11DeviceContext,
+    pub resource: ID3D11Buffer,
+    pub device_context: ID3D11DeviceContext,
 }
 
 unsafe impl Send for CudaD3D11Resource {}
@@ -49,6 +49,14 @@ impl CudaD3D11Resource {
     /// If you just want the graphics resource back as a raw pointer.
     pub unsafe fn raw(&self) -> *mut cudaGraphicsResource {
         self.handle
+    }
+    
+    pub fn resource(&self) -> &ID3D11Buffer {
+        &self.resource
+    }
+    
+    pub fn device_context(&self) -> &ID3D11DeviceContext {
+        &self.device_context
     }
 
     fn map_resource(&mut self, stream_ptr: *mut c_void) -> anyhow::Result<CudaMappedResource> {

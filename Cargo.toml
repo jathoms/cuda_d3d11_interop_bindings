@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.98"
 windows = { version = "0.61.1", default-features = false, features = [
     "Win32_Graphics_Direct3D11",
 ] }

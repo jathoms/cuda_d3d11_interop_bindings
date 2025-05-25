@@ -7,7 +7,13 @@ fn main() {
         .header("wrapper.h")
         .clang_arg(format!("-I{}", cuda_include_path.to_str().unwrap()))
         .allowlist_function("cudaGraphicsD3D11RegisterResource")
+        .allowlist_function("cudaGraphicsMapResources")
+        .allowlist_function("cudaGraphicsResourceGetMappedPointer")
+        .allowlist_function("cudaGraphicsUnmapResources")
+        .allowlist_function("cudaGraphicsUnregisterResource")
         .allowlist_type("cudaGraphicsResource_t")
+        .allowlist_type("cudaStream_t")
+        .allowlist_type("cudaError_t")
         .generate()
         .expect("Unable to generate CUDA interop bindings");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());

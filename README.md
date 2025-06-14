@@ -2,6 +2,18 @@
 
 For when you need to register and unregister Direct3D11 buffers with CUDA, as well as map/unmap those buffers for CUDA kernels.
 
+# Prerequisites
+
+CUDA Toolkit is installed.
+
+Environment variable `CUDA_PATH` points to your CUDA install.
+
+For example:
+
+- On windows, something like: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vXX.X` where `XX.X` is the version you have installed
+- On linux: `/usr/local/cuda`
+
+
 # Quickstart
 
 ```rust

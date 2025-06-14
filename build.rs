@@ -17,10 +17,6 @@ fn main() {
         .generate()
         .expect("Unable to generate CUDA interop bindings");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    println!(
-        "cargo:warning=Writing bindings into: {}",
-        out_path.to_str().unwrap()
-    );
     bindings
         .write_to_file(out_path.join("cuda_interop.rs"))
         .expect("Couldn't write bindings!");

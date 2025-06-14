@@ -1,12 +1,11 @@
 use std::ffi::c_void;
-use std::ops::Deref;
 
 use raw::{
     cudaError_cudaSuccess, cudaGraphicsD3D11RegisterResource, cudaGraphicsResource,
     cudaGraphicsUnregisterResource,
 };
 use windows::core::Interface;
-use windows::Win32::Graphics::Direct3D11::{self as wind3d, ID3D11Buffer, ID3D11DeviceContext};
+use windows::Win32::Graphics::Direct3D11::{ID3D11Buffer, ID3D11DeviceContext};
 
 mod raw {
     #![allow(
@@ -28,7 +27,7 @@ pub struct CudaD3D11Resource {
 unsafe impl Send for CudaD3D11Resource {}
 
 impl CudaD3D11Resource {
-    /// Register a D3D11 resource (i.e Buffer) with CUDA.
+    /// Register a D3D11 buffer with CUDA.
     pub fn new(
         device_context: ID3D11DeviceContext,
         resource: ID3D11Buffer,
@@ -47,14 +46,14 @@ impl CudaD3D11Resource {
     }
 
     /// If you just want the graphics resource back as a raw pointer.
-    pub unsafe fn raw(&self) -> *mut cudaGraphicsResource {
+    pub fn raw(&self) -> *mut cudaGraphicsResource {
         self.handle
     }
-    
+
     pub fn resource(&self) -> &ID3D11Buffer {
         &self.resource
     }
-    
+
     pub fn device_context(&self) -> &ID3D11DeviceContext {
         &self.device_context
     }
@@ -140,7 +139,7 @@ impl<'a> CudaMappedResource<'a> {
             cuda_res,
             stream_ptr,
             dev_ptr,
-            size: size as usize,
+            size,
         })
     }
 
